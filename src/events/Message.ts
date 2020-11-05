@@ -19,7 +19,15 @@ export default class Msg extends BaseEvent {
 
         const commandFile = client.baseClient.commands.get(command) || client.baseClient.commands.get(client.baseClient.aliases.get(command));
 
-        if (commandFile) return commandFile.run(client, message, args);
+        if (commandFile) {
+            
+            for (const perm of commandFile.BaseCommandInfo.permissions) {
+                if (!message.member.permissions.has(perm)) return message.channel.send("You do not have permission to use this command.");
+            }
+         
+            return commandFile.run(client, message, args);
+
+        }
 
     }
 }

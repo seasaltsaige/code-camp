@@ -9,6 +9,9 @@ const client = new BaseClient({
     token: process.env.TOKEN,
     commands: new Collection<string, BaseCommand>(),
     aliases: new Collection<string, string>(),
+    baseOptions: {
+        partials: ["REACTION", "USER", "MESSAGE"],
+    }
 });
 
 client.start();

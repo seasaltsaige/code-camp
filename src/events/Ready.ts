@@ -10,6 +10,6 @@ export default class Ready extends BaseEvent {
         });
     }
     async run (client: BaseClient) {
-        console.log(`Logged in as ${client.user.username} into ${client.guilds.cache.size}`);
+        console.log(`Logged in as ${client.user.username} into ${client.guilds.cache.size} server(s)`);
     }
 }

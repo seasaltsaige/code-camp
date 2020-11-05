@@ -1,4 +1,4 @@
-import { Collection } from "discord.js";
+import { ClientOptions, Collection } from "discord.js";
 import BaseCommand from "../util/BaseCommand";
 
 export default interface BaseClient {
@@ -7,4 +7,5 @@ export default interface BaseClient {
     token: string;
     commands: Collection<string, BaseCommand>;
     aliases: Collection<string, string>;
+    baseOptions: ClientOptions;
 }
