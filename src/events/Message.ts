@@ -24,6 +24,8 @@ export default class Msg extends BaseEvent {
             for (const perm of commandFile.BaseCommandInfo.permissions) {
                 if (!message.member.permissions.has(perm)) return message.channel.send("You do not have permission to use this command.");
             }
+
+            if (commandFile.BaseCommandInfo.ownerOnly && message.author.id !== "408080307603111936") return message.channel.send("You aren't the bot owner.");
          
             return commandFile.run(client, message, args);
 

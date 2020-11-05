@@ -1,5 +1,5 @@
 import { MessageReaction, User } from "discord.js";
-import AutoRole from "../database/schemas/AutoRole";
+import AutoRole from "../database/models/AutoRole";
 import BaseClient from "../util/BaseClient";
 import BaseEvent from "../util/BaseEvent";
 

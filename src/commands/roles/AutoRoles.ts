@@ -1,7 +1,7 @@
 import { Message, MessageReaction, User } from "discord.js";
 import BaseClient from "../../util/BaseClient";
 import BaseCommand from "../../util/BaseCommand";
-import AutoRole from "../../database/schemas/AutoRole";
+import AutoRole from "../../database/models/AutoRole";
 
 export default class AutoRoles extends BaseCommand {
     constructor() {
@@ -14,7 +14,7 @@ export default class AutoRoles extends BaseCommand {
             aliases: ["ar"],
         });
     }
-    async run (client: BaseClient, message: Message, args: string[]) {
+    public async run (client: BaseClient, message: Message, args: string[]) {
 
         await message.delete();
 

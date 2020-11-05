@@ -9,7 +9,7 @@ export default class BaseClient extends Client {
     }
 
     public start() {
-        CommandHandler.load("./src/commands", ["general", "roles"], this);
+        CommandHandler.load("./src/commands", ["general", "roles", "moderation", "welcome-goodbye", "owner"], this);
         EventHandler.load("./src/events", this);
         import("../database/database");
         this.login(this.baseClient.token);

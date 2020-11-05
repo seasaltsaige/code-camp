@@ -1,4 +1,4 @@
-import { Collection } from "discord.js";
+import { Collection, Intents } from "discord.js";
 import "dotenv/config";
 
 import BaseClient from "./util/BaseClient";
@@ -11,6 +11,7 @@ const client = new BaseClient({
     aliases: new Collection<string, string>(),
     baseOptions: {
         partials: ["REACTION", "USER", "MESSAGE"],
+        ws: { intents: Intents.ALL },
     }
 });
 
