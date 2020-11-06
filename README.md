@@ -1,0 +1,1 @@
+Open source Discord Bot for the server [Code Camp](https://discord.gg/uFJfQvtVr5)

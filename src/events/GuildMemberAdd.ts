@@ -15,6 +15,11 @@ export default class GuildMemberAdd extends BaseEvent {
         let guild = await Guild.findOne({ gId: member.guild.id });
         if (!guild) guild = await Guild.create({ gId: member.guild.id });
 
+        if (guild.mutedUsers.some(u => u.id === member.id)) {
+            const role = member.guild.roles.cache.get(guild.muteRole);
+            if (role) member.roles.add(role);
+        }
+
         const channel = <TextChannel>member.guild.channels.cache.get(guild.welcomeInfo.id);
         if (channel) {
             const msg = guild.welcomeInfo.message
