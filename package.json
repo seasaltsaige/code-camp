@@ -17,6 +17,7 @@
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.11",
+    "parse-ms": "^2.1.0",
     "readdir-plus": "^1.1.1"
   }
 }

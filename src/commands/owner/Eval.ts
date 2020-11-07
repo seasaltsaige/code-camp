@@ -1,6 +1,7 @@
 import { Message, MessageEmbed } from "discord.js";
 import BaseClient from "../../util/BaseClient";
 import BaseCommand from "../../util/BaseCommand";
+import { inspect } from "util";
 
 export default class Eval extends BaseCommand {
     constructor() {
@@ -28,7 +29,7 @@ export default class Eval extends BaseCommand {
                 .setFooter(`Evaluated in ${hrDiff[0] > 0 ? `${hrDiff[0]}s` : ""}${hrDiff[1] / 1000}ms.`)
                 .setTitle("Eval")
                 .addField("To evaluate", `\`\`\`javascript\n${args.join(" ") || "None"}\n\`\`\``)
-                .addField("Evaluated", `\`\`\`javascript\n${evaluated || "None"}\n\`\`\``)
+                .addField("Evaluated", `\`\`\`javascript\n${inspect(evaluated, false, 1) || "None"}\n\`\`\``)
                 .addField("Type Of", typeof evaluated);
             await message.channel.send(embed).catch(async (e) => {
 
