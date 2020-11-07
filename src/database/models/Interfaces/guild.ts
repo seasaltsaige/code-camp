@@ -1,4 +1,4 @@
-import { GuildMember, Role, Snowflake } from "discord.js";
+import { Snowflake } from "discord.js";
 import { Document } from "mongoose";
 import Infraction from "../../../Interfaces/Infraction";
 import Mute from "../../../Interfaces/Mute";
@@ -12,7 +12,7 @@ export default interface guild extends Document {
 
     infractions?: Array<Infraction>;
 
-    modRoles_Users?: Array<GuildMember | Role>;
+    modRoles_Users?: Array<Snowflake>;
 
     muteRole?: Snowflake;
 

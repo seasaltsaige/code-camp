@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, Role } from "discord.js";
 import Guild from "../../database/models/Guild";
 import BaseClient from "../../util/BaseClient";
 import BaseCommand from "../../util/BaseCommand";
@@ -22,6 +22,12 @@ export default class Mute extends BaseCommand {
 
         let guild = await Guild.findOne({ gId: message.guild.id });
         if (!guild) guild = await Guild.create({ gId: message.guild.id });
+
+        if (guild.modRoles_Users.includes(message.member.id)) return message.channel.send("You can't mute that member. They are on the mod list.");
+        for (const rm of guild.modRoles_Users) {
+            const r = message.guild.roles.cache.get(rm);
+            if (r && member.roles.cache.has(r.id)) return message.channel.send(`You can't mute members with the ${r.name} role.`);
+        }
 
         let muteRole = message.guild.roles.cache.get(guild.muteRole);
 
