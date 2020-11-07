@@ -3,21 +3,20 @@ import Guild from "../../database/models/Guild";
 import BaseClient from "../../util/BaseClient";
 import BaseCommand from "../../util/BaseCommand";
 
-export default class Warn extends BaseCommand {
+export default class Strike extends BaseCommand {
     constructor() {
         super({
-            name: "warn",
-            usage: "warn <user> <reason>",
-            aliases: [],
+            name: "strike",
             category: "moderation",
+            description: "Strike a user",
             permissions: ["MANAGE_MESSAGES"],
-            description: "Warn users",
+            usage: "strike <user> <reason>",
         });
     }
-    public async run(client: BaseClient, message: Message, args: Array<string>) {
-        const warnedMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    public async run(client: BaseClient, message: Message, args: string[]) {
+        const strikenMember = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
-        if (!warnedMember) return message.channel.send("Please mention someone to warn!");
+        if (!strikenMember) return message.channel.send("Please mention someone to warn!");
 
         let foundGuild = await Guild.findOne({ id: message.guild.id });
 
@@ -27,28 +26,27 @@ export default class Warn extends BaseCommand {
 
         caseId = caseId.padStart(5, "0");
 
-        let reason = args.slice(1, args.length).join(" ");
+        let reason = args.slice(1).join(" ");
 
         if (!reason) reason = `\`No Reason Provided\` - Use \`${client.baseClient.prefix}editinfraction ${caseId} <New Reason>\` to set a new reason.`;
 
         foundGuild.infractions.push({
-            user: warnedMember.id,
-            description: reason,
             caseId,
-            infractionType: "warn",
             date: new Date(),
+            description: reason,
+            infractionType: "strike",
+            user: strikenMember.id,
         });
 
         foundGuild.infractionNumber++;
 
-
         try {
-            await foundGuild.save();
+            await foundGuild.updateOne(foundGuild);
         } catch (err) {
-            return message.channel.send("Something went wrong while warning that user");
+            return message.channel.send("Something went wrong while striking that member");
         }
 
-        return message.channel.send(`Successfully warned **${warnedMember.user.tag}** for ${reason} with a infraction ID of #${caseId}`);
+        return message.channel.send(`Successfully struck **${strikenMember.user.tag}** for ${reason} with an infraction ID of #${caseId}`);
 
     }
 }
