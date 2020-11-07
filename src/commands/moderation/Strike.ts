@@ -18,9 +18,9 @@ export default class Strike extends BaseCommand {
 
         if (!strikenMember) return message.channel.send("Please mention someone to warn!");
 
-        let foundGuild = await Guild.findOne({ id: message.guild.id });
+        let foundGuild = await Guild.findOne({ gId: message.guild.id });
 
-        if (!foundGuild) foundGuild = new Guild({ id: message.guild.id });
+        if (!foundGuild) foundGuild = await Guild.create({ gId: message.guild.id });
 
         let caseId = foundGuild.infractionNumber.toString();
 
