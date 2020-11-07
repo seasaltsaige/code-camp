@@ -15,7 +15,7 @@ export default class Mute extends BaseCommand {
         });
     }
 
-    public async run (client: BaseClient, message: Message, args: string[]) {
+    public async run(client: BaseClient, message: Message, args: string[]) {
 
         const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!member) return message.channel.send("Please mention someone to mute.");
@@ -60,8 +60,8 @@ export default class Mute extends BaseCommand {
             user: member.id,
         });
 
-        guild.mutedUsers.push({ 
-            id: member.id, 
+        guild.mutedUsers.push({
+            id: member.id,
             unmute: "none",
             oldRoles: member.roles.cache.map(role => role.id).filter(role => role !== message.guild.id),
         });
