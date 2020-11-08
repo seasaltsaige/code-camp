@@ -23,4 +23,9 @@ export default interface guild extends Document {
         message: string;
         rolesToAdd: Array<Snowflake>;
     };
+
+    thankLB?: {
+        cId: Snowflake;
+        mId: Snowflake;
+    };
 }

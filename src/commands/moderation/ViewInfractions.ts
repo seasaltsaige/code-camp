@@ -26,7 +26,6 @@ export default class ViewWarns extends BaseCommand {
         if (!member) return message.channel.send("Please mention someone to view their infraction history.");
 
         const Infractions_Exist = foundGuild.infractions.find(infraction => infraction.user === member.id);
-        console.log(Infractions_Exist);
 
         if (!Infractions_Exist) return message.channel.send("That member has no infractions!");
 
