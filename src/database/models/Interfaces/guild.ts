@@ -28,4 +28,15 @@ export default interface guild extends Document {
         cId: Snowflake;
         mId: Snowflake;
     };
+
+    xpInfo?: {
+        xpMulti: number;
+        maxXP: number;
+        baseXP: number;
+        cooldown: number;
+        message: string;
+        levelingChannel: string;
+        ignoredChannels: Snowflake[];
+        ignoredUsers: Snowflake[];
+    }
 }

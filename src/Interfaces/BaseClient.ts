@@ -1,4 +1,6 @@
 import { ClientOptions, Collection } from "discord.js";
+import guild from "../database/models/Interfaces/guild";
+import rank from "../database/models/Interfaces/rank";
 import BaseCommand from "../util/BaseCommand";
 
 export default interface BaseClient {
@@ -7,5 +9,7 @@ export default interface BaseClient {
     token: string;
     commands: Collection<string, BaseCommand>;
     aliases: Collection<string, string>;
+    cachedGuilds: Collection<string, guild>;
+    cachedRanks: Collection<string, rank>;
     baseOptions: ClientOptions;
 }

@@ -23,15 +23,15 @@ export default class Rank extends BaseCommand {
         const place = allSortedData.findIndex((rank) => rank.uId === member.id) + 1;
 
         const percent = rankData.stats.currXp / rankData.stats.reqXp;
-        const data = parseInt(percent.toString().slice(2).split("")[0]);
+        const data = percent === 0 ? 0 : parseInt(percent.toString().slice(2).split("")[0]);
 
         const res: string[] = [];
         for (let i = 0; i < data; i++) {
-            res.push("▰");
+            res.push("●");
         }
 
         for (let i = 0; i < 10 - data; i++) {
-            res.push("▱");
+            res.push("○");
         }
 
         const Embed = new MessageEmbed()
