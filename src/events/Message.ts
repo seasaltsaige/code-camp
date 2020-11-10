@@ -36,7 +36,7 @@ export default class Msg extends BaseEvent {
 
             if (!guild.xpInfo.ignoredUsers.includes(message.author.id) && !guild.xpInfo.ignoredChannels.includes(message.channel.id)) {
 
-                const xpToAdd = (Math.floor(Math.random() * guild.xpInfo.maxXP) + 1) * guild.xpInfo.xpMulti;
+                const xpToAdd = Math.round((Math.floor(Math.random() * guild.xpInfo.maxXP) + 1) * guild.xpInfo.xpMulti);
 
                 const xpToReach = guild.xpInfo.baseXP * rank.stats.level;
 
