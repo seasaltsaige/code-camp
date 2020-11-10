@@ -17,6 +17,12 @@ export default class Ready extends BaseEvent {
     async run(client: BaseClient) {
         console.log(`Logged in as ${client.user.username} into ${client.guilds.cache.size} server(s)`);
 
+        client.user.setStatus("dnd");
+        client.user.setActivity({
+            name: "over Code Camp",
+            type: "WATCHING",
+        });
+
         const ranks = await Ranks.find();
 
         const guilds = await Guild.find();

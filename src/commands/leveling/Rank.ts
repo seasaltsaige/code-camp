@@ -27,11 +27,11 @@ export default class Rank extends BaseCommand {
 
         const res: string[] = [];
         for (let i = 0; i < data; i++) {
-            res.push("●");
+            res.push("◆");
         }
 
         for (let i = 0; i < 10 - data; i++) {
-            res.push("○");
+            res.push("◇");
         }
 
         const Embed = new MessageEmbed()
