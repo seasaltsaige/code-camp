@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 import Thanks from "../../database/models/Thanks";
 import BaseClient from "../../util/BaseClient";
 import BaseCommand from "../../util/BaseCommand";
@@ -21,6 +21,9 @@ export default class Thank extends BaseCommand {
         if (!member) return message.channel.send("Please mention someone to thank!");
         if (member.id === message.author.id) return message.channel.send("You can't thank yourself.");
         if (member.user.bot) return message.channel.send("You can't thank bots.");
+
+        if ((<TextChannel>message.channel).parent.id !== "773600815670755328") return message.channel.send(`You can't thank people outside of the ${message.guild.channels.cache.get("773600815670755328").name} category.`);
+
 
         const timeout = 1000 * 60 * 60 * 3;
 

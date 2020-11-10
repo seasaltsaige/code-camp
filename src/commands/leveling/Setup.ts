@@ -29,7 +29,7 @@ export default class Setup extends BaseCommand {
             { question: "Would you like to ignore any users? Type their mention or ID's into chat now.", setting: "ignoredUsers", answerType: "array" },
             { question: "Would you like to ignore any channels? Type their mention or ID's into chat now.", setting: "ignoredChannels", answerType: "array" },
             { question: "What channel would you like level up messages sent to?", setting: "levelingChannel", answerType: "string" },
-            { question: "What level up message would you like to use?\nOptions for response data: {{user}}, {{level}}, {{xp}}, {{rank}}", setting: "message", answerType: "message" },
+            { question: "What level up message would you like to use?\nOptions for response data: {{user}}, {{level}}, {{xp}}", setting: "message", answerType: "message" },
             { question: "What amount of XP would you like the max amount a user can get in one message to be?", setting: "maxXP", answerType: "number" },
             { question: "What timeout would you like to have for users gaining xp.", setting: "cooldown", answerType: "time" },
         ];

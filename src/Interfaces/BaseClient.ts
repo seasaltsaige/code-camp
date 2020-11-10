@@ -10,6 +10,6 @@ export default interface BaseClient {
     commands: Collection<string, BaseCommand>;
     aliases: Collection<string, string>;
     cachedGuilds: Collection<string, guild>;
-    cachedRanks: Collection<string, rank>;
+    cachedRanks: Collection<string, Collection<string, rank>>;
     baseOptions: ClientOptions;
 }

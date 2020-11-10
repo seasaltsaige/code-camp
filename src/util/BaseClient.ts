@@ -8,10 +8,10 @@ export default class BaseClient extends Client {
         super(baseClient.baseOptions);
     }
 
-    public start() {
+    public async start() {
         CommandHandler.load("./src/commands", ["general", "roles", "moderation", "welcome-goodbye", "owner", "thanking", "leveling"], this);
         EventHandler.load("./src/events", this);
-        import("../database/database");
+        await import("../database/database");
         this.login(this.baseClient.token);
     }
 }

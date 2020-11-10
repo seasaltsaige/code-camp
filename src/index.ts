@@ -12,7 +12,7 @@ const client = new BaseClient({
     commands: new Collection<string, BaseCommand>(),
     aliases: new Collection<string, string>(),
     cachedGuilds: new Collection<string, guild>(),
-    cachedRanks: new Collection<string, rank>(),
+    cachedRanks: new Collection<string, Collection<string, rank>>(),
     baseOptions: {
         partials: ["REACTION", "USER", "MESSAGE"],
         ws: { intents: Intents.ALL },

@@ -1,6 +1,7 @@
 
-import { TextChannel } from "discord.js";
+import { TextChannel, Collection } from "discord.js";
 import Guild from "../database/models/Guild";
+import rank from "../database/models/Interfaces/rank";
 import Ranks from "../database/models/Ranks";
 import BaseClient from "../util/BaseClient";
 import BaseEvent from "../util/BaseEvent";
@@ -25,9 +26,17 @@ export default class Ready extends BaseEvent {
                 const m = await ch.messages.fetch(guild.thankLB.mId);
                 setInterval(updateTimer, 5000, m);
             }
-            client.baseClient.cachedGuilds.set(guild.gId, guild);
         }
-        for (const rank of ranks) client.baseClient.cachedRanks.set(JSON.stringify({ gId: rank.gId, uId: rank.uId }), rank);
+
+        for (const g of client.guilds.cache.array()) {
+            const guildDoc = await Guild.findOne({ gId: g.id });
+            client.baseClient.cachedGuilds.set(g.id, guildDoc);
+        }
+
+        for (const rank of ranks) {
+            if (!client.baseClient.cachedRanks.get(rank.gId)) client.baseClient.cachedRanks.set(rank.gId, new Collection<string, rank>().set(rank.uId, rank));
+            else client.baseClient.cachedRanks.get(rank.gId).set(rank.uId, rank);
+        }
 
     }
 }
