@@ -3,6 +3,7 @@ import Guild from "../database/models/Guild";
 import Ranks from "../database/models/Ranks";
 import BaseClient from "../util/BaseClient";
 import BaseEvent from "../util/BaseEvent";
+import checkInvite from "../util/functions/checkInvite";
 import checkThank from "../util/functions/CheckThank";
 const Leveling = new Collection<string, Collection<string, number>>();
 let initiated = new Collection<string, boolean>();
@@ -18,16 +19,19 @@ export default class Msg extends BaseEvent {
         if (message.author.bot) return;
         if (!message.guild) return;
 
+        const args = message.content.slice(client.baseClient.prefix.length).trim().split(" ");
+        const command = args.shift();
+
 
         const thank = checkThank(message);
-        if (thank) return message.channel.send(thank);
+        if (thank && !client.baseClient.commands.get(command)) return message.channel.send(thank);
 
         let rank = client.baseClient.cachedRanks.get(message.guild.id).get(message.author.id);
         if (!rank) {
             rank = await Ranks.create({ gId: message.guild.id, uId: message.author.id });
             client.baseClient.cachedRanks.get(message.guild.id).set(message.author.id, rank);
         }
-        let guild = client.baseClient.cachedGuilds.get(message.guild.id);
+        let guild = await Guild.findOne({ gId: message.guild.id });
         if (!guild) {
             guild = await Guild.create({ gId: message.guild.id });
             client.baseClient.cachedGuilds.set(guild.gId, guild);
@@ -75,12 +79,19 @@ export default class Msg extends BaseEvent {
 
         }
 
+        let noModRole = true;
 
+        for (const r of guild.modRoles_Users) {
+            const role = message.guild.roles.cache.get(r);
+            if (role && message.member.roles.cache.has(role.id)) {
+                noModRole = false;
+                break;
+            }
+        }
+
+        if (noModRole === true && !guild.modRoles_Users.includes(message.author.id)) checkInvite(message);
 
         if (!message.content.startsWith(client.baseClient.prefix)) return;
-
-        const args = message.content.slice(client.baseClient.prefix.length).trim().split(" ");
-        const command = args.shift();
 
         const commandFile = client.baseClient.commands.get(command) || client.baseClient.commands.get(client.baseClient.aliases.get(command));
 
