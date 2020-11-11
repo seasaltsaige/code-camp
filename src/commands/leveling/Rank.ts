@@ -26,7 +26,7 @@ export default class Rank extends BaseCommand {
         const allSortedData = (await Ranks.find()).filter(r => r.gId === message.guild.id).sort((a, b) => b.stats.totalXp - a.stats.totalXp);
         const place = allSortedData.findIndex((rank) => rank.uId === member.id) + 1;
 
-        const percent = rankData.stats.currXp / guild.xpInfo.baseXP;
+        const percent = rankData.stats.currXp / (guild.xpInfo.baseXP * rankData.stats.level);
         const data = percent === 0 ? 0 : parseInt(percent.toString().slice(2).split("")[0]);
 
         const res: string[] = [];
