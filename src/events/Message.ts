@@ -3,6 +3,7 @@ import Guild from "../database/models/Guild";
 import Ranks from "../database/models/Ranks";
 import BaseClient from "../util/BaseClient";
 import BaseEvent from "../util/BaseEvent";
+import checkThank from "../util/functions/CheckThank";
 const Leveling = new Collection<string, Collection<string, number>>();
 let initiated = new Collection<string, boolean>();
 
@@ -17,6 +18,9 @@ export default class Msg extends BaseEvent {
         if (message.author.bot) return;
         if (!message.guild) return;
 
+
+        const thank = checkThank(message);
+        if (thank) return message.channel.send(thank);
 
         let rank = client.baseClient.cachedRanks.get(message.guild.id).get(message.author.id);
         if (!rank) {
