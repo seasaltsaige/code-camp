@@ -32,6 +32,35 @@ export default class Ready extends BaseEvent {
                 const m = await ch.messages.fetch(guild.thankLB.mId);
                 setInterval(updateTimer, 5000, m);
             }
+
+            if (guild.counterInfo) {
+
+                setInterval(async () => {
+
+                    if (guild.counterInfo.members !== "") {
+                        const mCh = client.guilds.cache.get(guild.gId).channels.cache.get(guild.counterInfo.members);
+                        if (mCh) await mCh.setName(`Members: ${client.guilds.cache.get(guild.gId).members.cache.size}`);
+                    }
+
+                    if (guild.counterInfo.bots !== "") {
+                        const bCh = client.guilds.cache.get(guild.gId).channels.cache.get(guild.counterInfo.bots);
+                        if (bCh) await bCh.setName(`Bots: ${client.guilds.cache.get(guild.gId).members.cache.filter(m => m.user.bot).size}`);
+                    }
+
+                    if (guild.counterInfo.users !== "") {
+                        const uCh = client.guilds.cache.get(guild.gId).channels.cache.get(guild.counterInfo.users);
+                        if (uCh) await uCh.setName(`Users: ${client.guilds.cache.get(guild.gId).members.cache.filter(m => !m.user.bot).size}`);
+                    }
+
+                    if (guild.counterInfo.channels !== "") {
+                        const cCh = client.guilds.cache.get(guild.gId).channels.cache.get(guild.counterInfo.channels);
+                        if (cCh) await cCh.setName(`Channels: ${client.guilds.cache.get(guild.gId).channels.cache.size}`);
+                    }
+
+                }, (60 * 1000 * 5) * 1.1)
+
+            }
+
         }
 
         for (const g of client.guilds.cache.array()) {
@@ -45,4 +74,4 @@ export default class Ready extends BaseEvent {
         }
 
     }
-}
+}   

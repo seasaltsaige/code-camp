@@ -53,6 +53,16 @@ const Guild = new Schema({
             ignoredUsers: [],
         }
     },
+    counterInfo: {
+        type: Object,
+        default: {
+            parent: "",
+            members: "",
+            bots: "",
+            users: "",
+            channels: "",
+        }
+    }
 });
 
 export default model<guild>("guild", Guild);

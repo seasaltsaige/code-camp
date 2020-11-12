@@ -38,5 +38,13 @@ export default interface guild extends Document {
         levelingChannel: string;
         ignoredChannels: Snowflake[];
         ignoredUsers: Snowflake[];
+    };
+
+    counterInfo?: {
+        parent: string;
+        members: string;
+        bots: string;
+        users: string;
+        channels: string;
     }
 }

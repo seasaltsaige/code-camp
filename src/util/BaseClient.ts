@@ -15,10 +15,12 @@ export default class BaseClient extends Client {
                 "roles",
                 "moderation",
                 "welcome-goodbye",
-                "owner", "thanking",
+                "owner",
+                "thanking",
                 "leveling",
                 "invite-tracking",
-                "miscellaneous"
+                "miscellaneous",
+                "channel-counter",
             ], this);
         EventHandler.load("./src/events", this);
         await import("../database/database");
