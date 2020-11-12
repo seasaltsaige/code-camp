@@ -1,5 +1,6 @@
 import { Collection, Message, TextChannel } from "discord.js";
 import Guild from "../database/models/Guild";
+import rank from "../database/models/Interfaces/rank";
 import Ranks from "../database/models/Ranks";
 import BaseClient from "../util/BaseClient";
 import BaseEvent from "../util/BaseEvent";
@@ -68,13 +69,17 @@ export default class Msg extends BaseEvent {
 
             if (!initiated.get(message.guild.id)) {
                 initiated.set(message.guild.id, true);
-                setInterval(async (m: Message) => {
+                setInterval(async (rank: Collection<string, Collection<string, rank>>) => {
                     try {
-                        await Ranks.findOneAndUpdate({ gId: m.guild.id, uId: m.author.id }, client.baseClient.cachedRanks.get(message.guild.id).get(message.author.id))
+                        for (const [__, GuildCollection] of rank) {
+                            for (const [__, uRank] of GuildCollection) {
+                                await Ranks.findOneAndUpdate({ gId: uRank.gId, uId: uRank.uId }, uRank);
+                            }
+                        }
                     } catch (err) {
                         console.log(err);
                     }
-                }, 90000, message);
+                }, 90000, client.baseClient.cachedRanks);
             }
 
         }
