@@ -73,14 +73,22 @@ export default class Msg extends BaseEvent {
                 initiated.set(message.guild.id, true);
                 setInterval(async (rank: Collection<string, Collection<string, rank>>) => {
                     try {
-                        for (const [__, GuildCollection] of rank) {
-                            for (const [__, uRank] of GuildCollection) {
-                                await Ranks.findOneAndUpdate({ gId: uRank.gId, uId: uRank.uId }, uRank);
+                        for (const CollectionOfRanks of rank.array()) {
+                            for (const uRank of CollectionOfRanks.array()) {
+                                const usefulData = {
+                                    stats: {
+                                        level: uRank.stats.level,
+                                        currXp: uRank.stats.currXp,
+                                        reqXp: uRank.stats.reqXp,
+                                        totalXp: uRank.stats.totalXp,
+                                    },
+                                };
+
+                                await Ranks.findOneAndUpdate({ gId: uRank.gId, uId: uRank.uId }, usefulData);
                             }
                         }
                     } catch (err) {
                         console.log(err);
-                        console.log("error in message event, while updating ranks");
                     }
                 }, 90000, client.baseClient.cachedRanks);
             }
