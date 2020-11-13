@@ -50,6 +50,7 @@ export default class Msg extends BaseEvent {
                 const xpToReach = guild.xpInfo.baseXP * rank.stats.level;
 
                 rank.stats.currXp += xpToAdd;
+                rank.stats.totalXp += xpToAdd;
 
                 if (rank.stats.currXp >= xpToReach) {
                     rank.stats.level = rank.stats.level + 1;
