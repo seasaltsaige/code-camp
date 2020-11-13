@@ -23,11 +23,15 @@ export default class Rank extends BaseCommand {
 
         let rankData = client.baseClient.cachedRanks.get(message.guild.id).get(member.id) || await Ranks.findOne({ gId: member.guild.id, uId: member.id });
         if (!rankData) rankData = await Ranks.create({ gId: member.guild.id, uId: member.id });
-        const allSortedData = (await Ranks.find()).filter(r => r.gId === message.guild.id).sort((a, b) => b.stats.totalXp - a.stats.totalXp);
+
+        const allData = client.baseClient.cachedRanks.get(message.guild.id).array();
+
+        const allSortedData = allData.sort((a, b) => b.stats.totalXp - a.stats.totalXp);
         const place = allSortedData.findIndex((rank) => rank.uId === member.id) + 1;
 
         const percent = rankData.stats.currXp / (guild.xpInfo.baseXP * rankData.stats.level);
         const data = percent === 0 ? 0 : parseInt(percent.toString().slice(2).split("")[0]);
+
 
         const res: string[] = [];
         for (let i = 0; i < data; i++) {
