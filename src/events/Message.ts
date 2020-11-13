@@ -27,7 +27,7 @@ export default class Msg extends BaseEvent {
         const thank = checkThank(message);
         if (thank && !client.baseClient.commands.get(command)) return message.channel.send(thank);
 
-        let rank = client.baseClient.cachedRanks.get(message.guild.id).get(message.author.id);
+        let rank = client.baseClient.cachedRanks.get(message.guild.id) ? client.baseClient.cachedRanks.get(message.guild.id).get(message.author.id) : undefined;
         if (!rank) {
             rank = await Ranks.create({ gId: message.guild.id, uId: message.author.id });
             client.baseClient.cachedRanks.get(message.guild.id).set(message.author.id, rank);
