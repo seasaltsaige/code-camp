@@ -47,4 +47,5 @@ export default interface guild extends Document {
         users: string;
         channels: string;
     }
+    suggestions?: string;
 }

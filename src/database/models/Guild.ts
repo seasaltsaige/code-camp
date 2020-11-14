@@ -3,8 +3,7 @@ import guild from "./Interfaces/guild";
 
 const Guild = new Schema({
     gId: {
-        type:
-            String,
+        type: String,
         required: true
     },
 
@@ -62,7 +61,11 @@ const Guild = new Schema({
             users: "",
             channels: "",
         }
-    }
+    },
+    suggestions: {
+        type: String,
+        default: "",
+    },
 });
 
 export default model<guild>("guild", Guild);
