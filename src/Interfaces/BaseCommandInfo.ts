@@ -1,4 +1,5 @@
 import { PermissionResolvable } from "discord.js";
+import { categories, categoriesType } from "../util/Categories";
 
 export default interface BaseCommandInfo {
     /**
@@ -20,7 +21,7 @@ export default interface BaseCommandInfo {
     /**
      * What category the command should be in
      */
-    category: string;
+    category: categoriesType;
     /**
      * The Discord PermissionResovable permissions required to use the command
      */
