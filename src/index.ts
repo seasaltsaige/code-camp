@@ -16,6 +16,7 @@ const client = new BaseClient({
     baseOptions: {
         partials: ["REACTION", "USER", "MESSAGE"],
         ws: { intents: Intents.ALL },
+        restTimeOffset: 60
     }
 });
 
