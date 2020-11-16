@@ -11,7 +11,7 @@ export default class MessageReactionRemove extends BaseEvent {
         });
     }
 
-    async run (client: BaseClient, reaction: MessageReaction, user: User) {
+    async run(client: BaseClient, reaction: MessageReaction, user: User) {
 
         if (user.bot) return;
 
@@ -27,11 +27,15 @@ export default class MessageReactionRemove extends BaseEvent {
 
         if (autoRole !== null) {
 
-            const role = autoRole.data.find(d => d.emoji.id === reaction.emoji.id || d.emoji.id === reaction.emoji.name).role;
+            const data = autoRole.data.find(d => d.emoji.id === reaction.emoji.id || d.emoji.id === reaction.emoji.name);
 
-            const roleToAdd = guild.roles.cache.get(role);
+            if (data) {
+                const role = data.role;
 
-            await member.roles.remove(roleToAdd);
+                const roleToAdd = guild.roles.cache.get(role);
+
+                await member.roles.add(roleToAdd);
+            }
 
         }
 
