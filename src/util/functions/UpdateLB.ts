@@ -8,9 +8,7 @@ export default async function updateLB(message: Message) {
     const channel = <TextChannel>message.guild.channels.cache.get(guild.thankLB.cId);
     const msg = await channel.messages.fetch(guild.thankLB.mId);
 
-    const lbData = await Thanks.find();
-    const sorted = lbData.sort((a, b) => b.thanks - a.thanks).slice(0, 10);
-
-    await msg.edit(`${sorted.map((thank, i) => `#${i + 1} - ${message.guild.members.cache.get(thank.uId)} with ${thank.thanks} thank(s)`).join("\n")}\n\nNext Update in: 60s`)
-
+    const lbData = await Thanks.find({}).sort({ thanks: -1 }).limit(10);
+    
+    await msg.edit(`${lbData.map((thank, i) => `#${i + 1} - ${message.guild.members.cache.get(thank.uId)} with ${thank.thanks} thank(s)`).join("\n")}\n\nNext Update in: 60s`)
 }
