@@ -21,7 +21,7 @@ export default class Unmute extends BaseCommand {
         if (!guild) guild = await Guild.create({ gId: message.guild.id });
         const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
-        if (guild.modRoles_Users.includes(message.member.id)) return message.channel.send("You can't unmute that member. They are on the mod list.");
+        if (guild.modRoles_Users.includes(member.id)) return message.channel.send("You can't unmute that member. They are on the mod list.");
         for (const rm of guild.modRoles_Users) {
             const r = message.guild.roles.cache.get(rm);
             if (r && member.roles.cache.has(r.id)) return message.channel.send(`You can't unmute members with the ${r.name} role.`);
@@ -44,6 +44,7 @@ export default class Unmute extends BaseCommand {
 
 
         } catch (err) {
+            console.log(err);
             return message.channel.send(`Something went wrong while unmuting ${member.user.tag}`);
         }
 

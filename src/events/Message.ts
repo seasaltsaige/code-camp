@@ -4,6 +4,7 @@ import rank from "../database/models/Interfaces/rank";
 import Ranks from "../database/models/Ranks";
 import BaseClient from "../util/BaseClient";
 import BaseEvent from "../util/BaseEvent";
+import autoMod from "../util/functions/autoMod";
 import checkInvite from "../util/functions/checkInvite";
 import checkThank from "../util/functions/CheckThank";
 import handleSuggestions from "../util/functions/handleSuggestion";
@@ -24,9 +25,11 @@ export default class Msg extends BaseEvent {
         const args = message.content.slice(client.baseClient.prefix.length).trim().split(" ");
         const command = args.shift();
 
+        await autoMod(message);
+
         await handleSuggestions(message);
 
-        const thank = checkThank(message);
+        const thank = await checkThank(message);
         if (thank && !client.baseClient.commands.get(command)) return message.channel.send(thank);
 
         let rank = client.baseClient.cachedRanks.get(message.guild.id) ? client.baseClient.cachedRanks.get(message.guild.id).get(message.author.id) : undefined;
