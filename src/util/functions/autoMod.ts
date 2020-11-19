@@ -18,7 +18,8 @@ export default async function autoMod(message: Message) {
 
 
     talkedRecently.push(message.author.id);
-    repetitiveSpam.push({ content: message.content, uId: message.author.id });
+
+    if (repetitiveSpam.filter(d => d.uId === message.author.id).length < 6) repetitiveSpam.push({ content: message.content, uId: message.author.id });
 
     setTimeout(() => talkedRecently.splice(talkedRecently.findIndex(el => el === message.author.id), 1), 4000);
     setTimeout(() => repetitiveSpam.splice(repetitiveSpam.findIndex(el => el.uId === message.author.id), 1), 15000);
@@ -49,8 +50,6 @@ export default async function autoMod(message: Message) {
         }
 
         const average = finalAdd / arrOfRatings.length;
-
-        console.log(arrOfRatings, average);
 
         if (average >= 0.5) {
             repetitiveSpamAlerted.set(message.author.id, message.guild.id);

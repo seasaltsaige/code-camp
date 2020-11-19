@@ -35,7 +35,7 @@ export default class Msg extends BaseEvent {
         let rank = client.baseClient.cachedRanks.get(message.guild.id) ? client.baseClient.cachedRanks.get(message.guild.id).get(message.author.id) : undefined;
         if (!rank) {
             rank = await Ranks.create({ gId: message.guild.id, uId: message.author.id });
-            if (!client.baseClient.cachedGuilds.get(message.guild.id)) client.baseClient.cachedRanks.set(message.guild.id, new Collection<string, rank>())
+            if (!client.baseClient.cachedRanks.get(message.guild.id)) client.baseClient.cachedRanks.set(message.guild.id, new Collection<string, rank>());
             client.baseClient.cachedRanks.get(message.guild.id).set(message.author.id, rank);
         }
         let guild = await Guild.findOne({ gId: message.guild.id });

@@ -4,7 +4,9 @@ const Thankings = ["thanks", "thank", "thx", "thnx", "thank you", "ty", "tysm", 
 
 export default async function checkThank(message: Message) {
 
-    const userOnCooldownProfile = await Thanks.findOne({ uId: message.author.id });
+    let userOnCooldownProfile = await Thanks.findOne({ uId: message.author.id });
+    if (!userOnCooldownProfile) userOnCooldownProfile = await Thanks.create({ uId: message.author.id });
+
     const timeout = 1000 * 60 * 60 * 3;
     if (timeout - (Date.now() - userOnCooldownProfile.cooldown)) return false;
 
