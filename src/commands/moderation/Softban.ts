@@ -21,7 +21,7 @@ export default class Softban extends BaseCommand {
         let guild = await Guild.findOne({ gId: message.guild.id });
         if (!guild) guild = await Guild.create({ gId: message.guild.id });
 
-        if (guild.modRoles_Users.includes(message.member.id)) return message.channel.send("You can't softban that member. They are on the mod list.");
+        if (guild.modRoles_Users.includes(member.id)) return message.channel.send("You can't softban that member. They are on the mod list.");
         for (const rm of guild.modRoles_Users) {
             const r = message.guild.roles.cache.get(rm);
             if (r && member.roles.cache.has(r.id)) return message.channel.send(`You can't softban members with the ${r.name} role.`);
