@@ -41,7 +41,7 @@ export default class ReplyQuote extends BaseCommand {
         });
 
 
-        const canvas = createCanvas(1300, 280);
+        const canvas = createCanvas(1300, 250);
         const ctx = canvas.getContext("2d");
 
         ctx.fillStyle = "#36393E";
@@ -52,23 +52,23 @@ export default class ReplyQuote extends BaseCommand {
 
         ctx.font = "38px whitney";
 
-        ctx.fillText(mainText, 166, 220);
+        ctx.fillText(mainText, 166 + 20, 220 - 20);
 
         ctx.font = "38px whitneyMedium";
         ctx.fillStyle = firstMember.displayHexColor === "#000000" ? "#ffffff" : firstMember.displayHexColor;
-        ctx.fillText(firstMember.user.username, 165, 167);
+        ctx.fillText(firstMember.user.username, 165 + 20, 167 - 20);
 
         const usernameWidth = ctx.measureText(firstMember.user.username).width;
         ctx.fillStyle = "#d1d1d1";
         ctx.font = "38px whitney";
 
-        ctx.fillText(" replied to ", 165 + usernameWidth, 167);
+        ctx.fillText(" replied to ", 165 + usernameWidth + 20, 167 - 20);
 
         const repliedWidth = ctx.measureText(" replied to ").width;
 
         ctx.fillStyle = secondMember.displayHexColor === "#000000" ? "#ffffff" : secondMember.displayHexColor;
         ctx.font = "38px whitneyMedium";
-        ctx.fillText(secondMember.user.username, 165 + usernameWidth + repliedWidth, 167);
+        ctx.fillText(secondMember.user.username, 165 + usernameWidth + repliedWidth + 20, 167 - 20);
 
         const secondMemberUserWidth = ctx.measureText(secondMember.user.username).width;
 
@@ -78,23 +78,24 @@ export default class ReplyQuote extends BaseCommand {
         const time = message.createdAt.toLocaleString().split(",")[1].split(":");
         const ampm = time.splice(2).join("").split(" ")[1];
 
-        ctx.fillText(` Today at${time.join(":")} ${ampm}`, 165 + usernameWidth + repliedWidth + secondMemberUserWidth + 3, 167)
+        ctx.fillText(` Today at${time.join(":")} ${ampm}`, 165 + usernameWidth + repliedWidth + secondMemberUserWidth + 3 + 20, 167 - 20)
 
-        ctx.font = "25px whitney";
+        ctx.font = "29px whitneyMedium";
+        ctx.globalAlpha = 0.7;
         ctx.fillStyle = "#d1d1d1";
-        ctx.fillText(replyText, 195 + 30, 100);
+        ctx.fillText(replyText, 195 + 20 + 20, 100 + 5 - 20);
 
         ctx.strokeStyle = "#a3a2a2";
         ctx.lineWidth = 4;
-        ctx.moveTo(34 + (105 / 2) + 80, 92);
-        ctx.lineTo(34 + (105 / 2) + 20, 92);
-        ctx.stroke();
+        ctx.globalAlpha = 0.4;
+        ctx.moveTo(34 + (105 / 2) + 70 + 20, 92 + 5 - 20);
+        ctx.lineTo(34 + (105 / 2) + 20, 92 + 5 - 20);
 
-        ctx.moveTo(34 + (105 / 2) + 20, 92);
-        ctx.bezierCurveTo(34 + (105 / 2), 92, 34 + (105 / 2), 92, 34 + (105 / 2), 103)
+        ctx.moveTo(34 + (105 / 2) + 20, 92 + 5 - 20);
+        ctx.quadraticCurveTo(34 + (105 / 2) + 4, 92 + 5 - 20, 34 + (105 / 2), 103 + 5 - 20);
 
-        ctx.moveTo(34 + (105 / 2), 125);
-        ctx.lineTo(34 + (105 / 2), 103);
+        ctx.moveTo(34 + (105 / 2), 125 - 20);
+        ctx.lineTo(34 + (105 / 2), 103 + 5 - 20);
         ctx.stroke();
 
 
@@ -102,27 +103,27 @@ export default class ReplyQuote extends BaseCommand {
         ctx.save();
         ctx.beginPath();
         ctx.lineWidth = 1;
-        ctx.arc(90, 182, 50, 0, Math.PI * 2, true);
+        ctx.arc(90, 182 - 20, 50, 0, Math.PI * 2, true);
         ctx.strokeStyle = "#36393E";
         ctx.stroke();
         ctx.closePath();
 
         ctx.clip();
         const avatar = await loadImage(firstMember.user.displayAvatarURL({ format: "png", size: 2048 }));
-        ctx.drawImage(avatar, 38, 130, 105, 105);
+        ctx.drawImage(avatar, 38, 130 - 20, 105, 105);
         ctx.restore();
 
         ctx.save();
         ctx.beginPath();
         ctx.lineWidth = 1;
-        ctx.arc(165 + 30, 90, 20, 0, Math.PI * 2);
+        ctx.arc(165 + 20 + 20, 90 + 5 - 20, 20, 0, Math.PI * 2);
         ctx.strokeStyle = "#36393E";
         ctx.stroke();
         ctx.closePath();
 
         ctx.clip();
         const avatar2 = await loadImage(secondMember.user.displayAvatarURL({ format: "png", size: 2048 }));
-        ctx.drawImage(avatar2, 165 + 10, 70, 40, 40);
+        ctx.drawImage(avatar2, 165 + 20, 70 + 5 - 20, 40, 40);
         ctx.restore();
 
 
