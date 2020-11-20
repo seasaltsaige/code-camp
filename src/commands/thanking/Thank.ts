@@ -3,6 +3,7 @@ import Thanks from "../../database/models/Thanks";
 import BaseClient from "../../util/BaseClient";
 import BaseCommand from "../../util/BaseCommand";
 import ms from "parse-ms";
+import Guild from "../../database/models/Guild";
 
 export default class Thank extends BaseCommand {
     constructor() {
@@ -48,7 +49,7 @@ export default class Thank extends BaseCommand {
             } catch (err) {
                 return message.channel.send("Something went wrong while trying to update the database.");
             }
-            return message.channel.send(`${message.author}, you thanked ${member.user.tag}, they now have ${memberThank.thanks} thanks.`);
+            return message.channel.send(`${message.author}, you thanked ${member.user.tag}, they now have ${memberThank.thanks} thanks. Check <#${(await (await Guild.findOne({ gId: message.guild.id })).thankLB.cId)}>`);
         }
     }
 }

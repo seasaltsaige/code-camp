@@ -10,6 +10,7 @@ const repetitiveSpam: { content: string; uId: string }[] = [];
 
 export default async function autoMod(message: Message) {
     const guild = await Guild.findOne({ gId: message.guild.id });
+    if (!guild) return;
 
     if (guild.modRoles_Users.includes(message.author.id)) return;
     for (const r of guild.modRoles_Users) {

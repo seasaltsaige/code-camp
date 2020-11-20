@@ -19,10 +19,10 @@ export default class ReplyQuote extends BaseCommand {
 
         const quoteArgs = message.content.split(" ").slice(1).join(" ").split(" | ");
 
-        const firstMember = message.guild.members.cache.get(quoteArgs[0]);
+        const firstMember = message.mentions.members.first(5)[0] || message.guild.members.cache.get(quoteArgs[0]);
         if (!firstMember) return message.channel.send("Please provide a valid 1st User ID");
 
-        const secondMember = message.guild.members.cache.get(quoteArgs[1]);
+        const secondMember = message.mentions.members.first(5)[1] || message.guild.members.cache.get(quoteArgs[1]);
         if (!secondMember) return message.channel.send("Please provide a valid 2nd User ID");
 
         const mainText = quoteArgs[2];
@@ -85,7 +85,7 @@ export default class ReplyQuote extends BaseCommand {
         ctx.fillText(replyText, 195 + 30, 100);
 
         ctx.strokeStyle = "#a3a2a2";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 4;
         ctx.moveTo(34 + (105 / 2) + 80, 92);
         ctx.lineTo(34 + (105 / 2) + 20, 92);
         ctx.stroke();

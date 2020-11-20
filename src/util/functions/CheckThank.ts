@@ -8,7 +8,7 @@ export default async function checkThank(message: Message) {
     if (!userOnCooldownProfile) userOnCooldownProfile = await Thanks.create({ uId: message.author.id });
 
     const timeout = 1000 * 60 * 60 * 3;
-    if (timeout - (Date.now() - userOnCooldownProfile.cooldown)) return false;
+    if (timeout - (Date.now() - userOnCooldownProfile.cooldown) > 0) return false;
 
     const args = message.content.split(" ");
 
