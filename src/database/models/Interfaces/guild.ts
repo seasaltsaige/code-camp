@@ -48,4 +48,5 @@ export default interface guild extends Document {
         channels: string;
     }
     suggestions?: string;
+    restrictedChannel?: string;
 }

@@ -118,6 +118,11 @@ export default class Msg extends BaseEvent {
 
         if (commandFile) {
 
+            if (message.channel.id !== guild.restrictedChannel && (noModRole && !guild.modRoles_Users.includes(message.author.id)) && commandFile.BaseCommandInfo.category !== "thanking") {
+                if (message.deletable) await message.delete();
+                return message.channel.send(`${message.author}, You can't use that command here.`).then(m => m.delete({ timeout: 8000 }));
+            }
+
             for (const perm of commandFile.BaseCommandInfo.permissions) {
                 if (!message.member.permissions.has(perm)) return message.channel.send("You do not have permission to use this command.");
             }

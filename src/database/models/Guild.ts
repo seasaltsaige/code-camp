@@ -66,6 +66,10 @@ const Guild = new Schema({
         type: String,
         default: "",
     },
+    restrictedChannel: {
+        type: String,
+        default: "",
+    },
 });
 
 export default model<guild>("guild", Guild);

@@ -17,7 +17,7 @@
     "@types/node": "^14.14.7",
     "@types/string-similarity": "^4.0.0",
     "canvas": "^2.6.1",
-    "discord.js": "^12.4.1",
+    "discord.js": "github:monbrey/discord.js#inline-replies",
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.14",
     "ms": "^2.1.2",
