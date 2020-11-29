@@ -7,7 +7,7 @@ import BaseClient from "./util/BaseClient";
 import BaseCommand from "./util/BaseCommand";
 const client = new BaseClient({
     mongoURI: process.env.MONGO,
-    prefix: "?",
+    prefix: "!!",
     token: process.env.TOKEN,
     commands: new Collection<string, BaseCommand>(),
     aliases: new Collection<string, string>(),
